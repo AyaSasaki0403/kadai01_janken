@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>役職じゃんけん</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+    <div class="container">
+        <h1>役職じゃんけん</h1>
+    </div>
+
+    <div class="container_ex">
+        <p class="title">ルール</p>
+        <p>◾️ あなたが相手に勝った場合、役職が1つ上がります。</p>
+        <p>◾️ あなたが相手に負けた場合、役職が1つ下がります。</p>
+        <p>◾️ おあいこだった場合、役職は変わりません。</p>
+    </div>
+
+    <div id="game">
+        <div class="field">
+            <p id="userField">あなた</p>
+            <img id="userImg" src="img_user/superwoman.png" alt="User Choice">
+        </div>
+
+        <div class="field">
+            <p id="pcField">相手</p>
+            <img id="pcImg" src="img_pc/businessman.png" alt="Computer Choice">
+        </div>
+
+        <h2>あなたの手を選んでください</h2>
+        <button onclick="janken(0)">
+            <img src="img_user/rock.png" alt="グー" style="width: 200px; height: 200px;">
+        </button>
+        <button onclick="janken(1)">
+            <img src="img_user/scissers.png" alt="チョキ" style="width: 200px; height: 200px;">
+        </button>
+        <button onclick="janken(2)">
+            <img src="img_user/paper.png" alt="パー" style="width: 200px; height: 200px;">
+        </button>
+
+        <div id="result"></div>
+    </div>
+
+    <div id="yakushoku">
+        <h2>現在のあなたの役職は</h2>
+        <img id="userImg2" src="img_yakushoku/hanzawa.png" alt="User Title">
+
+        <h2>現在の相手の役職は</h2> 
+        <img id="pcImg2" src="img_yakushoku/hanzawa.png" alt="Computer Title">
+
+        <div id="result_yakushoku"></div>
+    </div>
+
+
+    <script>
+        let userTitle = "hanzawa.png"; // プレイヤーの初期タイトル
+        let pcTitle = "hanzawa.png"; // コンピューターの初期タイトル
+
+        function janken(user){
+            let pcJk = ['rock_re.png','scissers_re.png','paper_re.png'];
+            let userJk = ['rock.png', 'scissers.png', 'paper.png'];
+            let pc = Math.floor(Math.random() * 3);
+            let userImg = document.getElementById("userImg");
+            userImg.src = "img_user/" + userJk[user];
+            let pcImg = document.getElementById("pcImg");
+            pcImg.src = "img_pc/" + pcJk[pc];
+
+            let result;
+            if (user === pc) {
+                result = "あいこ";
+            } else if ((user === 0 && pc === 1) || (user === 1 && pc === 2) || (user === 2 && pc === 0)) {
+                result = "勝ち";
+            } else {
+                result = "負け";
+            }
+            document.getElementById("result").innerText = "結果：" + result;
+            // 勝敗の結果を使って役職を変更
+            yakushoku(result);
+
+        }
+
+
+        function yakushoku(result){
+            // 役職画像の更新
+            let userImage = document.getElementById("userImg2")
+            let pcImage = document.getElementById("pcImg2")
+        }
+                switch (result) {
+                    case "勝ち":
+                        // userの役職昇進
+                    switch(userTitle){
+                        case "hanzawa.png":
+                        userTitle = "shima.png";
+                        userImage.src ="img_yakushoku/shima.png";
+                        break;
+                        case "shima.png":
+                        userTitle = "ogawa.png";
+                        userImage.src ="img_yakushoku/ogawa.png";
+                        break;
+                        case "ogawa.png":
+                        userTitle = "daimon.png";
+                        userImage.src ="img_yakushoku/daimon.png";
+                        break;
+                        case "daimon.png":
+                        userTitle = "edward.png";
+                        userImage.src ="img_yakushoku/edward.png";
+                        break;
+                        default:
+                        // その他の処理
+                        break;
+                    }
+                    
+                    break;
+                    case "負け":
+                    // userの役職の降格
+                    switch (userTitle) {
+                        case "edward.png":
+                          userTitle = "daimon.png";
+                          userImage.src ="img_yakushoku/daimon.png";
+                          break;
+                        case "daimon.png":
+                          userTitle = "ogawa.png";
+                          userImage.src ="img_yakushoku/ogawa.png";
+                          break;
+                        case "ogawa.png":
+                          userTitle = "shima.png";
+                          userImage.src ="img_yakushoku/shima.png";
+                          break;
+                        case "shima.png":
+                          userTitle = "hanzawa.png";
+                          userImage.src ="img_yakushoku/hanzawa.png";
+                          break;
+                        default:
+                        // その他の処理
+                          break;
+                }
+                break;
+            default:
+                // その他の処理
+                break;
+            }
+
+             // プレイヤーの役職画像を更新
+             userImage.src = "img_yakushoku/" + userTitle + ".png";
+
+
+            // 結果を表示
+            document.getElementById("result_yakushoku").innerText = "プレイヤーの役職: " + userTitle + "\n" + "コンピュータの役職: " + pcTitle;
+    </script>
+        
+
+</body>
+</html>
